@@ -1,0 +1,32 @@
+{
+    "test1@gmail.com": {
+        "id": "1",
+        "name": "Test 1",
+        "email": "test1@gmail.com",
+        "password": "ass",
+        "role": "customer",
+        "account number": 276053591127920222,
+        "account type": "savings",
+        "balance": 14500
+    },
+    "test2@bank.com": {
+        "id": "2",
+        "name": "Test 2",
+        "email": "test2@bank.com",
+        "password": "qwerty",
+        "role": "official",
+        "account number": null,
+        "account type": null,
+        "balance": null
+    },
+    "test3@gmail.com": {
+        "id": "3",
+        "name": "Test 3",
+        "email": "test3@gmail.com",
+        "password": "qwerty",
+        "role": "customer",
+        "account number": 928242461427920224,
+        "account type": "savings",
+        "balance": 139999
+    }
+}

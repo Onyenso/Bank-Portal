@@ -7,7 +7,7 @@
         "role": "customer",
         "account number": 276053591127920222,
         "account type": "savings",
-        "balance": 14500
+        "balance": 17500
     },
     "test2@bank.com": {
         "id": "2",
@@ -28,5 +28,25 @@
         "account number": 928242461427920224,
         "account type": "savings",
         "balance": 139999
+    },
+    "joshua@dukka.com": {
+        "id": "6",
+        "name": "Edward Joshua",
+        "email": "joshua@dukka.com",
+        "password": "1234",
+        "role": "customer",
+        "account number": 70298271049920226,
+        "account type": "savings",
+        "balance": 7000
+    },
+    "joshadmin*&@*#&@\ud83d\ude42@bank.com": {
+        "id": "7",
+        "name": "Josh Admin*&@*#&@ \ud83d\ude42",
+        "email": "joshadmin*&@*#&@\ud83d\ude42@bank.com",
+        "password": "\ud83d\ude42",
+        "role": "official",
+        "account number": null,
+        "account type": null,
+        "balance": null
     }
 }

@@ -21,26 +21,25 @@ def start():
         "Reply with a number to begin transaction: "
     )
 
-    match transaction:
-        case "1":
-            open_account()
-        case "2":
-            transfer()
-        case "3":
-            deposit()
-        case "4":
-            withdraw()
-        case "5":
-            check_balance()
-        case "6":
-            get_account_statement()
-        case "7":
-            change_password()
-        case "8":
-            admin_start()
-        case default:
-            print("\n\nSorry, invalid input!!🤬😡")
-            again()
+    if transaction == "1":
+        open_account()
+    elif transaction == "2":
+        transfer()
+    elif transaction == "3":
+        deposit()
+    elif transaction == "4":
+        withdraw()
+    elif transaction == "5":
+        check_balance()
+    elif transaction == "6":
+        get_account_statement()
+    elif transaction == "7":
+        change_password()
+    elif transaction == "8":
+        admin_start()
+    else:
+        print("\n\nSorry, invalid input!!🤬😡")
+        again()
 
 
 def login():
@@ -254,19 +253,19 @@ def admin_start():
             "4. Change password.\n"
             "\nReply with a number to begin transaction: "
         )
-        match transaction:
-            case "1":
-                admin_open_account()
-            case "2":
-                edit_customer_details()
-            case "3":
-                get_customer_details()
-            case "4":
-                user.change_password()
-                again()
-            case default:
-                print("\n\nSorry, invalid input!!🤬😡")
-                again()
+
+        if transaction == "1":
+            admin_open_account()
+        elif transaction == "2":
+            edit_customer_details()
+        elif transaction == "3":
+            get_customer_details()
+        elif transaction == "4":
+            user.change_password()
+            again()
+        else:
+            print("\n\nSorry, invalid input!!🤬😡")
+            again()
 
 
 def admin_open_account():
@@ -274,43 +273,43 @@ def admin_open_account():
         "\nWhat type of account would you like to create?"
         "\nType 'A' for an official account and 'B' for a customer account. "
     ).lower()
-    match new_user_role:
-        case "a":
-            print("Opening account...")
-            name = input("What is the name for the account? ").title()
-            password1 = input("Type a password to secure your account: ")
-            password2 = input("Please confirm password: ")
 
-            if not name or not password1 or not password2:
-                print("\nSorry, invalid inputs!! Make sure to fill all fields correctly!!🤬😡")
-                admin_open_account()
-                return
+    if new_user_role == "a":
+        print("Opening account...")
+        name = input("What is the name for the account? ").title()
+        password1 = input("Type a password to secure your account: ")
+        password2 = input("Please confirm password: ")
 
-            if password1 != password2:
-                print("\nSorry, passwords do not match!!😡")
-                admin_open_account()
-                return
-            email = None
-            try:
-                database = pandas.read_json("database.json")
-            except ValueError:
-                pass
-            else:
-                # if email already exists in the company
-                if f"{name.lower()}@bank.com" in database.columns:
-                    email = f"{name.lower()}{dt.datetime.now().second}@bank.com"
-
-            new_user = Official(name, email=email, password=password1)
-            print(f"\nSuccess!! Account has been created. Email is {new_user.email}.🙂")
-            again()
-            return
-        case "b":
-            open_account()
-            return
-        case default:
-            print("\n\nSorry, invalid input!!🤬😡")
+        if not name or not password1 or not password2:
+            print("\nSorry, invalid inputs!! Make sure to fill all fields correctly!!🤬😡")
             admin_open_account()
             return
+
+        if password1 != password2:
+            print("\nSorry, passwords do not match!!😡")
+            admin_open_account()
+            return
+        email = None
+        try:
+            database = pandas.read_json("database.json")
+        except ValueError:
+            pass
+        else:
+            # if email already exists in the company
+            if f"{name.lower()}@bank.com" in database.columns:
+                email = f"{name.lower()}{dt.datetime.now().second}@bank.com"
+
+        new_user = Official(name, email=email, password=password1)
+        print(f"\nSuccess!! Account has been created. Email is {new_user.email}.🙂")
+        again()
+        return
+    elif new_user_role == "b":
+        open_account()
+        return
+    else:
+        print("\n\nSorry, invalid input!!🤬😡")
+        admin_open_account()
+        return
 
 
 def edit_customer_details():
@@ -339,47 +338,47 @@ def edit_customer_details():
 
         with open("database.json", "w") as file:
             database = database.to_dict()
-            match detail:
-                case "1":
-                    new_account_number = input("\nInput new account number: ")
-                    database[customer]["account number"] = new_account_number
-                case "2":
-                    new_account_type = input(
-                        "\nInput new account type. Type 's' for savings and 'c' for current."
-                    ).lower()
-                    if new_account_type not in ["s", "c"]:
-                        print("\nSorry, invalid account type.😡🤬")
-                        edit_customer_details()
-                        return
-                    database[customer]["account type"] = "savings" if new_account_type == "s" else "current"
-                case "3":
-                    new_role = input(
-                        "\nInput new user role. Type 'a' for official and 'b' for customer."
-                    )
-                    if new_role not in ["a", "b"]:
-                        print("\nSorry, invalid user role.😡🤬")
-                        edit_customer_details()
-                        return
-                    database[customer]["role"] = "official" if new_role == "a" else "customer"
-                case "4":
-                    new_account_balance = input("\nInput new account balance: ")
-                    try:
-                        new_account_balance = int(new_account_balance)
-                    except ValueError:
-                        print("\nSorry, invalid input.😡🤬")
-                        edit_customer_details()
-                        return
-                    database[customer]["balance"] = new_account_balance
-                case "5":
-                    new_account_name = input("\nInput new account name: ")
-                    database[customer]["name"] = new_account_name
-                case "6":
-                    new_account_email = input("\nInput new account email: ")
-                    database[customer]["email"] = new_account_email
-                case default:
-                    print("\n\nSorry, invalid input!!🤬😡")
+
+            if detail == "1":
+                new_account_number = input("\nInput new account number: ")
+                database[customer]["account number"] = new_account_number
+            elif detail == "2":
+                new_account_type = input(
+                    "\nInput new account type. Type 's' for savings and 'c' for current."
+                ).lower()
+                if new_account_type not in ["s", "c"]:
+                    print("\nSorry, invalid account type.😡🤬")
                     edit_customer_details()
                     return
+                database[customer]["account type"] = "savings" if new_account_type == "s" else "current"
+            elif detail == "3":
+                new_role = input(
+                    "\nInput new user role. Type 'a' for official and 'b' for customer."
+                )
+                if new_role not in ["a", "b"]:
+                    print("\nSorry, invalid user role.😡🤬")
+                    edit_customer_details()
+                    return
+                database[customer]["role"] = "official" if new_role == "a" else "customer"
+            elif detail == "4":
+                new_account_balance = input("\nInput new account balance: ")
+                try:
+                    new_account_balance = int(new_account_balance)
+                except ValueError:
+                    print("\nSorry, invalid input.😡🤬")
+                    edit_customer_details()
+                    return
+                database[customer]["balance"] = new_account_balance
+            elif detail == "5":
+                new_account_name = input("\nInput new account name: ")
+                database[customer]["name"] = new_account_name
+            elif detail == "6":
+                new_account_email = input("\nInput new account email: ")
+                database[customer]["email"] = new_account_email
+            else:
+                print("\n\nSorry, invalid input!!🤬😡")
+                edit_customer_details()
+                return
 
             json.dump(database, file, indent=4)
             print("\nDetail changed successfully!🙂")
@@ -420,11 +419,19 @@ def again():
         "Type 'y' for yes or 'n' for no. "
     ).lower()
 
-    match another:
-        case "y":
-            start()
-        case "n":
-            print("\nThank you and have a nice day.🙂")
-        case default:
-            print("\nSorry, invalid input!🤬😡")
-            again()
+    if another == "y":
+        start()
+    elif another == "n":
+        print("\nThank you and have a nice day.🙂")
+    else:
+        print("\nSorry, invalid input!🤬😡")
+        again()
+
+    # match another:
+    #     case "y":
+    #         start()
+    #     case "n":
+    #         print("\nThank you and have a nice day.🙂")
+    #     case default:
+    #         print("\nSorry, invalid input!🤬😡")
+    #         again()

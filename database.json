@@ -1,0 +1,19 @@
+{
+    "test1@gmail.com": {
+        "account number": 920487614012920221,
+        "account type": "current",
+        "balance": 8500,
+        "email": "test1@gmail.com",
+        "id": "1",
+        "name": "Test One",
+        "password": "1234",
+        "role": "customer"
+    },
+    "test2@bank.com": {
+        "id": "2",
+        "name": "Test Two",
+        "email": "test2@bank.com",
+        "password": "1234",
+        "role": "official"
+    }
+}

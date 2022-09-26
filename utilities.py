@@ -4,6 +4,7 @@ import pandas
 import datetime as dt
 import csv
 import os.path
+import re
 from member_factory import Customer, Official
 
 
@@ -21,30 +22,31 @@ def start():
         "Reply with a number to begin transaction: "
     )
 
-    if transaction == "1":
-        open_account()
-    elif transaction == "2":
-        transfer()
-    elif transaction == "3":
-        deposit()
-    elif transaction == "4":
-        withdraw()
-    elif transaction == "5":
-        check_balance()
-    elif transaction == "6":
-        get_account_statement()
-    elif transaction == "7":
-        change_password()
-    elif transaction == "8":
-        admin_start()
-    else:
-        print("\n\nSorry, invalid input!!🤬😡")
-        again()
+    match transaction:
+        case "1":
+            open_account()
+        case "2":
+            transfer()
+        case "3":
+            deposit()
+        case "4":
+            withdraw()
+        case "5":
+            check_balance()
+        case "6":
+            get_account_statement()
+        case "7":
+            change_password()
+        case "8":
+            admin_start()
+        case default:
+            print("\n\nSorry, invalid input!!🤬😡")
+            again()
 
 
 def login():
     print("\nPlease login to authorize transaction.")
-    email = input("\nYour email: ")
+    email = input("\nYour email: ").lower()
     password = input("Your password: ")
 
     if not email or not password:
@@ -102,15 +104,16 @@ def record(user_email, transaction, amount, name=None):
 def open_account():
     print("Opening account...")
     name = input("What is the name for the account? ").title()
-    email = input("What is the email for the account? ")
+    email = input("What is the email for the account? ").lower()
     account_type = input(
         "What type of account would you like to create?\n"
         "Type 'S' for a savings account or 'C' for a current account: "
     ).lower()
     password1 = input("Type a password to secure your account: ")
     password2 = input("Please confirm password: ")
+    re_pattern = '^.+[A-Za-z]$'
 
-    if not name or not email or not password1 or not password2 or account_type not in ["s", "c"]:
+    if not re.match(re_pattern, name) or not email or not password1 or not password2 or account_type not in ["s", "c"]:
         print("\nSorry, invalid inputs!! Make sure to fill all fields correctly!!🤬😡")
         again()
         return
@@ -238,7 +241,7 @@ def admin_start():
     user = login()
     if user is None:
         again()
-        return
+        return False
     elif user.role != "official":
         print("\nSorry, you don't have access to this portal!😡🤬")
         again()
@@ -254,18 +257,19 @@ def admin_start():
             "\nReply with a number to begin transaction: "
         )
 
-        if transaction == "1":
-            admin_open_account()
-        elif transaction == "2":
-            edit_customer_details()
-        elif transaction == "3":
-            get_customer_details()
-        elif transaction == "4":
-            user.change_password()
-            again()
-        else:
-            print("\n\nSorry, invalid input!!🤬😡")
-            again()
+        match transaction:
+            case "1":
+                admin_open_account()
+            case "2":
+                edit_customer_details()
+            case "3":
+                get_customer_details()
+            case "4":
+                user.change_password()
+                again()
+            case default:
+                print("\n\nSorry, invalid input!!🤬😡")
+                again()
 
 
 def admin_open_account():
@@ -419,19 +423,11 @@ def again():
         "Type 'y' for yes or 'n' for no. "
     ).lower()
 
-    if another == "y":
-        start()
-    elif another == "n":
-        print("\nThank you and have a nice day.🙂")
-    else:
-        print("\nSorry, invalid input!🤬😡")
-        again()
-
-    # match another:
-    #     case "y":
-    #         start()
-    #     case "n":
-    #         print("\nThank you and have a nice day.🙂")
-    #     case default:
-    #         print("\nSorry, invalid input!🤬😡")
-    #         again()
+    match another:
+        case "y":
+            start()
+        case "n":
+            print("\nThank you and have a nice day.🙂")
+        case default:
+            print("\nSorry, invalid input!🤬😡")
+            again()

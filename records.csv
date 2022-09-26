@@ -1,2 +1,11 @@
 user,time,date,transaction,amount,account
 test1@gmail.com,14:5,2022-09-12,deposit,8500,
+test1@gmail.com,16:14,2022-09-25,deposit,1000,
+test1@gmail.com,16:14,2022-09-25,withdrawal,1000,
+test1@gmail.com,16:15,2022-09-25,deposit,1000,
+test1@gmail.com,16:17,2022-09-25,deposit,1000,
+test1@gmail.com,16:17,2022-09-25,withdrawal,1000,
+test1@gmail.com,16:17,2022-09-25,deposit,1000,
+test1@gmail.com,16:17,2022-09-25,withdrawal,1000,
+test1@gmail.com,10:41,2022-09-26,deposit,1000,
+test1@gmail.com,10:41,2022-09-26,withdrawal,1000,

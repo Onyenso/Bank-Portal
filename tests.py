@@ -20,7 +20,7 @@ class TestUtilities(TestCase):
     @unittest.skipUnless(os.path.exists("database.json"), "Test only runs when database exists.")
     def test_login_official_with_correct_detail(self, mocked_input):
         """Tests that a right email or password for an official returns an Official object"""
-        mocked_input.side_effect = ["test2@bank.com", "qwerty"]
+        mocked_input.side_effect = ["test2@bank.com", "1234"]
         self.assertIsInstance(utilities.login(), Official)
 
     @mock.patch('utilities.input', create=True)
@@ -31,7 +31,7 @@ class TestUtilities(TestCase):
         self.assertEqual(utilities.login(), None, "Expected None.")
 
     @mock.patch('utilities.input', create=True)
-    @unittest.skipIf(os.path.exists("databasehy.json"), "Test only runs when database does not exist.")
+    @unittest.skipIf(os.path.exists("database.json"), "Test only runs when database does not exist.")
     def test_login_no_database(self, mocked_input):
         """Tests that None is returned when there is no database"""
         mocked_input.side_effect = ["test1@gmail.com", "ass"]
